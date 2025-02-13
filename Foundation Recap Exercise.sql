@@ -3,14 +3,13 @@ Foundation Recap Exercise
 
 Use the table PatientStay.  
 This lists 44 patients admitted to London hospitals over 5 days between Feb 26th and March 2nd 2024
-*/
 
 SELECT
 	*
 FROM
 	PatientStay ps ;
 
-/*
+
 1. List the patients -
 a) in the Oxleas or PRUH hospitals and
 b) admitted in February 2024
