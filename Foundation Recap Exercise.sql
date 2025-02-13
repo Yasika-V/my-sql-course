@@ -5,19 +5,23 @@ Use the table PatientStay.
 This lists 44 patients admitted to London hospitals over 5 days between Feb 26th and March 2nd 2024 */
 
 
-SELECT 	*
-FROM	PatientStay ps 
+SELECT
+	*
+FROM
+	PatientStay ps
 
 
 /* 1. List the patients -
 a) in the Oxleas or PRUH hospitals and
 b) admitted in February 2024
 c) only the Surgery wards*/
-SELECT 	*
-FROM	PatientStay ps 
-WHERE ps.Hospital in ('Oxleas','PRUH')
-and ps.AdmittedDate BETWEEN '20240131' and '20240229'
-and ps.ward LIKE '%Surgery';
+SELECT
+	*
+FROM
+	PatientStay ps
+WHERE ps.Hospital IN ('Oxleas','PRUH')
+	AND ps.AdmittedDate BETWEEN '20240131' AND '20240229'
+	AND ps.ward LIKE '%Surgery';
 
 /* 2. Show the PatientId, AdmittedDate, DischargeDate, Hospital and Ward columns only, not all the columns.
 3. Order results by AdmittedDate (latest first) then PatientID column (high to low)
@@ -25,17 +29,19 @@ and ps.ward LIKE '%Surgery';
 */
 
 -- Write the SQL statement here /*
-SELECT  ps.PatientId,
-        ps.AdmittedDate,
-        ps.DischargeDate,
-        ps.Hospital,
-        ps.Ward,
-        DATEDIFF(DAY,ps.AdmittedDate,ps.DischargeDate)+1 as PatientStayInHospital
-        
-FROM    PatientStay ps 
-WHERE ps.Hospital in ('Oxleas','PRUH')
-and ps.AdmittedDate BETWEEN '20240131' and '20240229'
-and ps.ward LIKE '%Surgery'
+SELECT
+	ps.PatientId
+	,ps.AdmittedDate
+	,ps.DischargeDate
+	,ps.Hospital
+	,ps.Ward
+	,DATEDIFF(DAY,ps.AdmittedDate,ps.DischargeDate)+1 AS PatientStayInHospital
+
+FROM
+	PatientStay ps
+WHERE ps.Hospital IN ('Oxleas','PRUH')
+	AND ps.AdmittedDate BETWEEN '20240131' AND '20240229'
+	AND ps.ward LIKE '%Surgery'
 ORDER BY ps.AdmittedDate DESC,
         ps.PatientID DESC;
 
@@ -49,3 +55,11 @@ ORDER BY ps.AdmittedDate DESC,
 
 -- Write the SQL statement here
 
+SELECT
+	ps.Hospital
+	,Count (*) AS NoOfPatient
+	, sum(ps.Tariff) as Tariff
+FROM
+	PatientStay ps
+GROUP BY ps.Hospital
+order by NoOfPatient DESC
